@@ -1,0 +1,46 @@
+vlan 10
+name Block-10
+vlan 11
+name Block-11
+vlan 12
+name Block-12
+vlan 13
+name Block-13
+vlan 100
+name Management
+
+int vlan 10
+ip address 192.168.0.3 255.255.255.224
+standby 10 ip 192.168.0.1
+standby 10 priority 110
+standby 10 preempt
+
+int vlan 11
+ip address 192.168.0.35 255.255.255.224
+standby 11 ip 192.168.0.33
+standby 11 priority 110
+standby 11 preempt
+
+int vlan 12
+ip address 192.168.0.67 255.255.255.224
+standby 12 ip 192.168.0.65
+standby 12 priority 100
+standby 12 preempt
+
+int vlan 13 
+ip address 192.168.0.99 255.255.255.224
+standby 13 ip 192.168.0.97
+standby 13 priority 100
+standby 13 preempt
+
+
+int range g0/0, g0/3
+description Link-To-Access
+switchport trunk encapsulation dot1q
+switchport mode trunk
+switchport nonegotiate
+switchport trunk allowed vlan 10,11,12,13,100
+switchport trunk native vlan 999
+
+spanning-tree vlan 10,11,100 root primary
+spanning-tree vlan 12,13 root secondary

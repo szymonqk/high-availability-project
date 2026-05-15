@@ -1,0 +1,31 @@
+
+vlan 10
+name Block-10
+vlan 11
+name Block-11
+vlan 100
+name Management
+
+spanning-tree mode rapid-pvst
+
+spanning-tree portfast edge default
+spanning-tree portfast edge bpduguard default
+
+int g0/2
+switchport mode access
+switchport access vlan 10
+spanning-tree portfast edge
+description Link-To-VLAN10
+
+int range g0/0 - 1
+switchport trunk encapsulation dot1q
+switchport mode trunk
+switchport nonegotiate
+switchport trunk allowed vlan 10,11,100
+switchport trunk native vlan 999
+description Link-To-Distribution
+
+
+
+
+
