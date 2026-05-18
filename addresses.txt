@@ -1,0 +1,20 @@
+VLAN 10,11,12,13,100
+192.168.0.0/27
+
+DistributionSwitch-0 => CoreSwitch-0
+10.0.0.1 - 10.0.0.2
+
+DistributionSwitch-0 => CoreSwitch-1
+10.0.0.5 - 10.0.0.6
+
+DistributionSwitch-1 => CoreSwitch-0
+10.0.0.9 - 10.0.0.10
+
+DistributionSwitch-1 => CoreSwitch-1
+10.0.0.13 - 10.0.0.14
+
+CoreSwitch-1 => EdgeRouter-0
+10.0.0.17 - 10.0.0.18
+
+CoreSwitch-1 => EdgeRouter-1
+10.0.0.21 - 10.0.0.22

@@ -1,0 +1,14 @@
+int g0/0
+ip address 10.0.0.2 255.255.255.252
+description Link-To-DistributionSwitch-0
+
+int g1/1
+ip address 10.0.0.10 255.255.255.252
+description Link-To-DistributionSwitch-1
+
+int loopback0
+ip address 3.3.3.3 255.255.255.255
+
+router ospf 3
+router-id 3.3.3.3
+network 10.0.0.0 0.0.0.63 area 0
