@@ -37,6 +37,12 @@ interface vlan 13
     standby 13 priority 100
     standby 13 preempt
 
+interface vlan 100
+    ip address 192.168.1.2 255.255.255.224
+    standby 100 ip 192.168.1.1
+    standby 100 priority 100
+    standby 100 preempt
+
 interface GigabitEthernet0/0
     description Link-To-AccessSwitch-0
     switchport trunk allowed vlan 10-13,100
@@ -86,9 +92,11 @@ interface Loopback0
 router ospf 1
     network 192.168.0.0 0.0.0.255 area 0
     network 10.0.0.0 0.0.0.63 area 0
+    network 192.168.1.4 0.0.0.0 area 0
     router-id 1.1.1.1
     passive-interface vlan 10
     passive-interface vlan 11
     passive-interface vlan 12
     passive-interface vlan 13
+    passive-interface vlan 100
 
