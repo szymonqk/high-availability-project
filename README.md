@@ -27,4 +27,21 @@ Designed to explore LAN architecture, redundancy and multilayer switching beyond
 Here is the list of all technology and protocols that have been used in the the project.
 
 > [!WARNING]
-> Urgent info that needs immediate user attention to avoid problems.
+> I am currently still working on the project there might be some upgrades in the future. Please check updates to be aware of any changes.
+
+## Switching
+
+| Name       | Description                                                          |
+|------------|----------------------------------------------------------------------|
+| Rapid-PVST | DS-0 Root bridge for VLAN 10,11,100, DS-1 Root bridge for VLAN 12,13 |
+| Trunking   | 802.1Q, Native VLAN 999                                              |
+| EtherChannel | PortChannel-1 using LACP (active mode) between CoreSwitch-0 ==> CoreSwitch-1
+
+## Routing
+
+| Name          | Description                                                                                                                      |
+|---------------|----------------------------------------------------------------------------------------------------------------------------------|
+| OSPF          | Area 0, router IDs via loopback addresses, default route on CS-0 and CS-1, no DR/BDR selection, passive interfaces only on VLANs |
+| NAT           | PAT on ER-0 (Inside: G0/0) and ER-1 (Inside: G0/0) for hosts using ACL: VLAN_NAT, BACKUP_VLAN_NAT                                |
+| IP SLA        | Testing connectivity to Internet to address 8.8.8.8, frequency 10, timeout 5000, threshold 5000                                  |
+| Static routes | Static route (0.0.0.0) to Internet via ISP-0, ISP-1 created on ER-0 and ER-1                                                     |

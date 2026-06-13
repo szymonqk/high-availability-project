@@ -10,6 +10,8 @@ vlan 12
     name Block-12
 vlan 13
     name Block-13
+vlan 14
+    name ServerFarm
 vlan 100
     name Management
 
@@ -37,6 +39,12 @@ interface vlan 13
     standby 13 priority 100
     standby 13 preempt
 
+interface vlan 14
+    ip address 192.168.0.130 255.255.255.240
+    standby 14 ip 192.168.0.129
+    standby 14 priority 100
+    standby 14 preempt
+
 interface vlan 100
     ip address 192.168.1.2 255.255.255.224
     standby 100 ip 192.168.1.1
@@ -51,6 +59,14 @@ interface GigabitEthernet0/0
     switchport mode trunk
     switchport nonegotiate
 
+interface range GigabitEthernet0/1
+    description Link-To-ServerAccessSwitch-0
+    switchport trunk encapsulation dot1q
+    switchport mode trunk
+    switchport nonegotiate
+    switchport trunk allowed vlan 14
+    switchport trunk native vlan 999
+
 interface GigabitEthernet0/3
     description Link-To-AccessSwitch-1
     switchport trunk allowed vlan 10-13,100
@@ -60,8 +76,8 @@ interface GigabitEthernet0/3
     switchport nonegotiate
 
 spanning-tree mode rapid-pvst
-spanning-tree vlan 10,11,100 priority 24576
-spanning-tree vlan 12,13 priority 28672
+spanning-tree vlan 10,11,100 root primary
+spanning-tree vlan 12,13,14 root secondary
 
 interface vlan 10
     no shutdown

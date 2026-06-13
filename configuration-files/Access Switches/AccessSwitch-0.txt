@@ -37,6 +37,12 @@ interface vlan 100
 
 ip default-gateway 192.168.1.1
 
+service password-encryption
+enable secret lab123!_
+
+line console 0
+    transport output ssh
+    exec-timeout 5
 
 
 
