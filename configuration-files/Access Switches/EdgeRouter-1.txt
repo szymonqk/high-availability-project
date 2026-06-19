@@ -45,3 +45,29 @@ route-map BACKUP_NAT_ISP-1 permit 10
 
 ip nat inside source route-map BACKUP_NAT_ISP-0 interface GigabitEthernet0/2 overload
 ip nat inside source route-map BACKUP_NAT_ISP-1 interface GigabitEthernet0/1 overload
+
+ip domain-lookup
+ip name-server 192.168.0.132
+ip domain-name lablocal.pl
+
+enable secret lab123!_
+
+service password-encryption
+
+username admin secret lab123!_
+
+crypto key generate rsa 2048
+ip ssh version 2
+
+line vty 0 15
+    transport input ssh
+    login local
+    access-class SSH_ACCESS in
+
+ip access-list standard SSH_ACCESS
+    permit 192.168.1.0 0.0.0.31
+    deny any
+
+line console 0
+    exec-timeout 5
+    password lab123!_

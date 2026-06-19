@@ -45,3 +45,15 @@ Here is the list of all technology and protocols that have been used in the the 
 | NAT           | PAT on ER-0 (Inside: G0/0) and ER-1 (Inside: G0/0) for hosts using ACL: VLAN_NAT, BACKUP_VLAN_NAT                                |
 | IP SLA        | Testing connectivity to Internet to address 8.8.8.8, frequency 10, timeout 5000, threshold 5000                                  |
 | Static routes | Static route (0.0.0.0) to Internet via ISP-0, ISP-1 created on ER-0 and ER-1                                                     |
+| ICMP          | Used by IP SLA to test connectivity to Internet
+
+## Services (For more details please navigate to Windows Server project)
+| Name   | Description                                                                                                                                                    |
+|--------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| DNS    | DNS for LAN, Windows Server with forwarder to remote host (8.8.8.8, 8.8.4.4)                                                                                   |
+| DHCP   | Automation for IPs assigning, Windows Server, VLAN 10,11,12,13,100                                                                                             |
+| NTP    | planned                                                                                                                                                        |
+| AD     | Active Directory, domain controller on Windows Server                                                                                                          |
+| HSRP   | Gateway redundancy for all VLANs, DS-0 and DS-1 function as primary gateway and backup for all VLANs in the LAN, Priority 110 (Primary), Priority 100 (Backup) |
+| Syslog | planned                                                                                                                                                        |
+

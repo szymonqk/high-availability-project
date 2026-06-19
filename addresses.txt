@@ -32,12 +32,12 @@ VLAN 14 (Server Farm netmask: /28)
 192.168.0.132 - 143
 
 Maska: /27
-VLAN 100 # do przemyslenia Management
+VLAN 100 # Management
 192.168.1.1 - Virtual IP
 192.168.1.2 - DS-0 SVI
 192.168.1.3 - DS-1 SVI
 192.168.1.4 - MGMT PC
-192.168.1.5 - 30 Pula adresów dla urządzeń sieciowych
+192.168.1.5 - 30
 
 DistributionSwitch-0 => CoreSwitch-0
 10.0.0.1 - 10.0.0.2

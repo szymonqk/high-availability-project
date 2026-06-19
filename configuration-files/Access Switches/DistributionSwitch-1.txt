@@ -10,6 +10,8 @@ vlan 12
     name Block-12
 vlan 13
     name Block-13
+vlan 14
+    name ServerFarm
 vlan 100
     name Management
 
@@ -57,6 +59,7 @@ interface range GigabitEthernet0/0
     switchport nonegotiate
     switchport trunk allowed vlan 10,11,12,13,100
     switchport trunk native vlan 999
+    ip dhcp snooping trust
 
 interface range GigabitEthernet0/1
     description Link-To-ServerAccessSwitch-0
@@ -65,6 +68,7 @@ interface range GigabitEthernet0/1
     switchport nonegotiate
     switchport trunk allowed vlan 14
     switchport trunk native vlan 999
+    ip dhcp snooping trust
 
 interface GigabitEthernet0/3
     description Link-To-AccessSwitch-0
@@ -73,6 +77,7 @@ interface GigabitEthernet0/3
     switchport nonegotiate
     switchport trunk allowed vlan 10,11,12,13,100
     switchport trunk native vlan 999
+    ip dhcp snooping trust
 
 spanning-tree vlan 12,13,14 root primary
 spanning-tree vlan 10,11,100 root secondary
@@ -102,3 +107,36 @@ router ospf 2
     passive-interface vlan 12
     passive-interface vlan 13
     passive-interface vlan 100
+
+ip domain-lookup
+ip name-server 192.168.0.132
+ip domain-name lablocal.pl
+
+enable secret lab123!_
+
+service password-encryption
+
+username admin secret lab123!_
+
+crypto key generate rsa 2048
+ip ssh version 2
+
+line vty 0 15
+    transport input ssh
+    login local
+    access-class SSH_ACCESS in
+
+ip access-list standard SSH_ACCESS
+    permit 192.168.1.0 0.0.0.31
+    deny any
+
+line console 0
+    exec-timeout 5
+
+line console 0
+    exec-timeout 5
+    password lab123!_
+
+
+ip dhcp snooping
+ip dhcp snooping vlan 10-14,100

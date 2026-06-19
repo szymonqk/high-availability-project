@@ -1,3 +1,5 @@
+hostname AccessSwitch-0
+
 vlan 10
     name Block-10
 vlan 11
@@ -14,7 +16,32 @@ spanning-tree portfast edge bpduguard default
 interface GigabitEthernet0/2
     switchport mode access
     switchport access vlan 10
+    switchport port-security
+    switchport port-security violation restrict
+    switchport port-security mac-address sticky
+    ip arp inspection limit rate 30
+    ip dhcp snooping limit rate 10
     description Link-To-VLAN10
+
+interface GigabitEthernet0/3
+    switchport mode access
+    switchport access vlan 11
+    switchport port-security
+    switchport port-security violation restrict
+    switchport port-security mac-address sticky
+    ip arp inspection limit rate 30
+    ip dhcp snooping limit rate 10
+    description Link-To-VLAN11
+
+interface GigabitEthernet1/0
+    switchport mode access
+    switchport access vlan 100
+    switchport port-security
+    switchport port-security violation restrict
+    switchport port-security mac-address sticky
+    ip arp inspection limit rate 30
+    ip dhcp snooping limit rate 10
+    description Link-To-MGMTPC
 
 interface GigabitEthernet0/0
     description Link-To-DistributionSwitch-0
@@ -23,6 +50,8 @@ interface GigabitEthernet0/0
     switchport trunk native vlan 999
     switchport mode trunk
     switchport nonegotiate
+    ip arp inspection trust
+    ip dhcp snooping trust
 
 interface GigabitEthernet0/1
     description Link-To-DistributionSwitch-1
@@ -31,18 +60,46 @@ interface GigabitEthernet0/1
     switchport trunk native vlan 999
     switchport mode trunk
     switchport nonegotiate
+    ip arp inspection trust
+    ip dhcp snooping trust
 
 interface vlan 100
     ip address 192.168.1.5 255.255.255.224
 
 ip default-gateway 192.168.1.1
 
-service password-encryption
+ip domain-lookup
+ip name-server 192.168.0.132
+ip domain-name lablocal.pl
+
 enable secret lab123!_
 
+service password-encryption
+
+username admin secret lab123!_
+
+crypto key generate rsa 2048
+ip ssh version 2
+
+line vty 0 15
+    transport input ssh
+    login local
+    access-class SSH_ACCESS in
+
+ip access-list standard SSH_ACCESS
+    permit 192.168.1.0 0.0.0.31
+    deny any
+
 line console 0
-    transport output ssh
     exec-timeout 5
+    password lab123!_
+
+
+ip arp inspection vlan 10,11,100
+ip arp inspection validate ip src-mac dst-mac
+
+ip dhcp snooping
+ip dhcp snooping vlan 10,11,100
 
 
 
