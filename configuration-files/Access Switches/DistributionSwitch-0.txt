@@ -36,7 +36,7 @@ interface vlan 12
     standby 12 priority 100
     standby 12 preempt
 
-interface vlan 13 
+interface vlan 13
     ip address 192.168.0.98 255.255.255.224
     ip helper-address 192.168.0.132
     standby 13 ip 192.168.0.97
@@ -54,70 +54,56 @@ interface vlan 100
     ip address 192.168.1.2 255.255.255.224
     ip helper-address 192.168.0.132
     standby 100 ip 192.168.1.1
-    standby 100 priority 100
+    standby 100 priority 110
     standby 100 preempt
 
 interface GigabitEthernet0/0
     description Link-To-AccessSwitch-0
-    switchport trunk allowed vlan 10-13,100
+    switchport trunk allowed vlan 10,11,100
     switchport trunk encapsulation dot1q
     switchport trunk native vlan 999
     switchport mode trunk
     switchport nonegotiate
-    ip dhcp snooping trust
 
 interface range GigabitEthernet0/1
     description Link-To-ServerAccessSwitch-0
     switchport trunk encapsulation dot1q
     switchport mode trunk
     switchport nonegotiate
-    switchport trunk allowed vlan 14
+    switchport trunk allowed vlan 12,13
     switchport trunk native vlan 999
-    ip dhcp snooping trust
 
 interface GigabitEthernet0/3
     description Link-To-AccessSwitch-1
-    switchport trunk allowed vlan 10-13,100
+    switchport trunk allowed vlan 14,100
     switchport trunk encapsulation dot1q
     switchport trunk native vlan 999
     switchport mode trunk
-    switchport nonegotiate
-    ip dhcp snooping trust 
+    switchport nonegotiate 
 
-spanning-tree mode rapid-pvst
-spanning-tree vlan 10,11,100 root primary
-spanning-tree vlan 12,13,14 root secondary
-
-interface vlan 10
-    no shutdown
-interface vlan 11
-    no shutdown
-interface vlan 12
-    no shutdown
-interface vlan 13 
-    no shutdown
-
-interface g1/0
+interface GigabitEthernet1/0
     no switchport
     ip address 10.0.0.1 255.255.255.252
     description Link-To-CoreSwitch-0
     ip ospf network point-to-point
 
-interface g1/1
+interface GigabitEthernet1/1
     no switchport
     ip address 10.0.0.5 255.255.255.252
     description Link-To-CoreSwitch-1
     ip ospf network point-to-point
 
+spanning-tree mode rapid-pvst
+spanning-tree vlan 10,11,100 root primary
+spanning-tree vlan 12,13,14 root secondary
 
 interface Loopback0
     ip address 1.1.1.1 255.255.255.255
 
-
 router ospf 1
     network 192.168.0.0 0.0.0.255 area 0
     network 10.0.0.0 0.0.0.63 area 0
-    network 192.168.1.4 0.0.0.0 area 0
+    network 192.168.1.0 0.0.0.31 area 0
     router-id 1.1.1.1
     passive-interface vlan 10
     passive-interface vlan 11
@@ -139,6 +125,7 @@ crypto key generate rsa 2048
 ip ssh version 2
 
 line vty 0 15
+    exec-timeout 5
     transport input ssh
     login local
     access-class SSH_ACCESS in
@@ -150,6 +137,4 @@ ip access-list standard SSH_ACCESS
 line console 0
     exec-timeout 5
     password lab123!_
-
-ip dhcp snooping
-ip dhcp snooping vlan 10-14,100
+    login

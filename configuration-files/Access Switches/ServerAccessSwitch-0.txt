@@ -29,6 +29,8 @@ interface GigabitEthernet0/0
     description Link-To-WinServer
     switchport mode access
     switchport access vlan 14
+    ip arp inspection trust
+    ip dhcp snooping trust
 
 ip domain-lookup
 ip name-server 192.168.0.132
@@ -44,6 +46,7 @@ crypto key generate rsa 2048
 ip ssh version 2
 
 line vty 0 15
+    exec-timeout 5
     transport input ssh
     login local
     access-class SSH_ACCESS in
@@ -55,6 +58,7 @@ ip access-list standard SSH_ACCESS
 line console 0
     exec-timeout 5
     password lab123!_
+    login
 
 ip arp inspection vlan 14
 ip arp inspection validate ip src-mac dst-mac

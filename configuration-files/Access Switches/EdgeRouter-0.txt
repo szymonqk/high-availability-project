@@ -66,6 +66,7 @@ crypto key generate rsa 2048
 ip ssh version 2
 
 line vty 0 15
+    exec-timeout 5
     transport input ssh
     login local
     access-class SSH_ACCESS in
@@ -77,3 +78,4 @@ ip access-list standard SSH_ACCESS
 line console 0
     exec-timeout 5
     password lab123!_
+    login

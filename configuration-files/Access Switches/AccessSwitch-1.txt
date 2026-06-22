@@ -19,7 +19,9 @@ interface GigabitEthernet0/2
     switchport port-security
     switchport port-security violation restrict
     switchport port-security mac-address sticky
+    switchport port-security maximum 1
     ip arp inspection limit rate 30
+    ip dhcp snooping limit rate 10
     description Link-To-VLAN12
 
 interface GigabitEthernet0/3
@@ -28,7 +30,9 @@ interface GigabitEthernet0/3
     switchport port-security
     switchport port-security violation restrict
     switchport port-security mac-address sticky
+    switchport port-security maximum 1
     ip arp inspection limit rate 30
+    ip dhcp snooping limit rate 10
     description Link-To-VLAN13
 
 interface GigabitEthernet0/0
@@ -39,6 +43,7 @@ interface GigabitEthernet0/0
     switchport mode trunk
     switchport nonegotiate
     ip arp inspection trust
+    ip dhcp snooping trust
 
 interface GigabitEthernet0/1
     description Link-To-DistributionSwitch-0
@@ -48,6 +53,7 @@ interface GigabitEthernet0/1
     switchport mode trunk
     switchport nonegotiate
     ip arp inspection trust
+    ip dhcp snooping trust
 
 interface vlan 100
     ip address 192.168.1.6 255.255.255.224
@@ -68,6 +74,7 @@ crypto key generate rsa 2048
 ip ssh version 2
 
 line vty 0 15
+    exec-timeout 5
     transport input ssh
     login local
     access-class SSH_ACCESS in
@@ -79,10 +86,13 @@ ip access-list standard SSH_ACCESS
 line console 0
     exec-timeout 5
     password lab123!_
+    login
 
 ip arp inspection vlan 12,13
 ip arp inspection validate ip src-mac dst-mac
 
+ip dhcp snooping
+ip dhcp snooping vlan 12,13
 
 
 

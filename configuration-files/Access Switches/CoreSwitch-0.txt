@@ -20,12 +20,22 @@ router ospf 3
     router-id 3.3.3.3
     network 10.0.0.0 0.0.0.63 area 0
 
-interface range GigabitEthernet0/1 - 3
+interface GigabitEthernet0/1
     no switchport
     channel-protocol lacp
     channel-group 1 mode active
 
-interface Port-channel1
+interface GigabitEthernet0/2
+    no switchport
+    channel-protocol lacp
+    channel-group 1 mode active
+
+interface GigabitEthernet0/3
+    no switchport
+    channel-protocol lacp
+    channel-group 1 mode active
+
+interface Port-Channel1
     no switchport
     ip address 10.0.0.25 255.255.255.252
     description Link-To-CoreSwitch-1
@@ -51,6 +61,7 @@ crypto key generate rsa 2048
 ip ssh version 2
 
 line vty 0 15
+    exec-timeout 5
     transport input ssh
     login local
     access-class SSH_ACCESS in
@@ -62,3 +73,4 @@ ip access-list standard SSH_ACCESS
 line console 0
     exec-timeout 5
     password lab123!_
+    login
