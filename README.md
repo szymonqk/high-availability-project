@@ -1,9 +1,9 @@
 # Enterprise Network Architecture
-Project simulates Three-Tier architecture with Dual ISP failover (with Internet access via GNS3 NAT), using Cisco devices (Routers, switches) and VPCS representing computers only to test connectivity.
+Project simulates Four-Tier architecture with Dual ISP failover (with Internet access via GNS3 NAT), using Cisco devices (Routers, switches) and VPCS representing computers only to test connectivity.
 
 Designed to explore LAN architecture, redundancy and multilayer switching beyond the CCNA level.
 
-> The IP range `203.0.113.x`, `198.51.100.x` follows RFC 5737 designated only as TEST-NET-2 documentation.
+> The IP ranges 203.0.113.0/24 (TEST-NET-3) and 198.51.100.0/24 (TEST-NET-2) are reserved for documentation purposes only, defined in RFC 5737.
 
 ## Topology
 ![Topology of project.](topology.png)

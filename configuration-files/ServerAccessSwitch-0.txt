@@ -29,6 +29,10 @@ interface GigabitEthernet0/0
     description Link-To-WinServer
     switchport mode access
     switchport access vlan 14
+    switchport port-security
+    switchport port-security violation restrict
+    switchport port-security mac-address sticky
+    switchport port-security maximum 1
     ip arp inspection trust
     ip dhcp snooping trust
 
