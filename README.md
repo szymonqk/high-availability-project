@@ -65,6 +65,8 @@ Here is the list of all technology and protocols that have been used in the the 
 > The GNS3 NAT node may have issues resolving DNS queries. Sometimes LAN hosts need access to Internet-0 and Internet-1 to be able to send traffic to external network like Google's DNS.
 
 ## Security and hardening devices
+> All passwords in the configuration files are stored on the local devices. In a real enterprise environment, centralized authentication AAA/TACACS+ would be used with an authentication server.
+
 | Name                  | Description                                                                                                                                        |
 |-----------------------|----------------------------------------------------------------------------------------------------------------------------------------------------|
 | Line access           | Securing VTY line and console line using secret password and service encryption                                                                    |
