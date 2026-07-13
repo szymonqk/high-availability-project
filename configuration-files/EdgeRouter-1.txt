@@ -7,15 +7,17 @@ ip nat inside
 
 int g0/1
 ip address dhcp
+ip nat outside
 
 int g0/2 
 ip address dhcp
+ip nat outside
 
 int loopback 0
 ip address 6.6.6.6 255.255.255.255
 
 router ospf 6
-network 10.0.0.20 255.255.255.252 area 0
+network 10.0.0.20 0.0.0.3 area 0
 router-id 6.6.6.6
 default-information originate metric 100
 
@@ -50,11 +52,11 @@ ip domain-lookup
 ip name-server 192.168.0.132
 ip domain-name lablocal.pl
 
-enable secret lab123!_
+enable secret <secret>
 
 service password-encryption
 
-username admin secret lab123!_
+username admin secret <secret>
 
 crypto key generate rsa 2048
 ip ssh version 2
@@ -71,5 +73,5 @@ ip access-list standard SSH_ACCESS
 
 line console 0
     exec-timeout 5
-    password lab123!_
+    password <secret>
     login

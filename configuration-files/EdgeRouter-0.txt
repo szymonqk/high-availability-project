@@ -56,11 +56,11 @@ ip domain-lookup
 ip name-server 192.168.0.132
 ip domain-name lablocal.pl
 
-enable secret lab123!_
+enable secret <secret>
 
 service password-encryption
 
-username admin secret lab123!_
+username admin secret <secret>
 
 crypto key generate rsa 2048
 ip ssh version 2
@@ -77,5 +77,5 @@ ip access-list standard SSH_ACCESS
 
 line console 0
     exec-timeout 5
-    password lab123!_
+    password <secret>
     login
